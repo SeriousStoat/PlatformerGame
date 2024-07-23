@@ -55,7 +55,7 @@ public class GamePanel extends JPanel{
             frames = 0;
         }
         
-        repaint();
+        // repaint();
     }
 
     private void updateRectangle() {
