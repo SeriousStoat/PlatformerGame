@@ -1,4 +1,4 @@
-package com.seriousstoat.platformergame;
+package com.seriousstoat.platformergame.main;
 
 public class Game {
 
@@ -8,6 +8,7 @@ public class Game {
     public Game() {
         gamePanel = new GamePanel();
         gameWindow = new GameWindow(gamePanel);
+        gamePanel.requestFocus();
         
     }
 

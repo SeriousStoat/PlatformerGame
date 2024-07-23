@@ -1,4 +1,4 @@
-package com.seriousstoat.platformergame;
+package com.seriousstoat.platformergame.main;
 
 public class MainClass {
 
