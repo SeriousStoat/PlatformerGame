@@ -1,7 +1,5 @@
 package com.seriousstoat.platformergame.inputs;
 
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.*;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import com.seriousstoat.platformergame.main.GamePanel;

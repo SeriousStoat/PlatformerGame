@@ -1,9 +1,5 @@
 package com.seriousstoat.platformergame.entities;
 
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.DOWN;
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.LEFT;
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.RIGHT;
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.UP;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.IDLE;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.RUNNING;
@@ -108,6 +104,14 @@ public class Player extends Entity {
         
     }
 
+    public void resetDirBooleans() {
+        up = false;
+		left = false;
+        down = false;
+        right = false;
+
+	}
+
     public boolean isUp() {
         return up;
     }
@@ -139,6 +143,8 @@ public class Player extends Entity {
     public void setRight(boolean right) {
         this.right = right;
     }
+
+	
 
     
 
