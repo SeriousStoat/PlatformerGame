@@ -96,7 +96,7 @@ public class Player extends Entity {
 
     private void loadAnimations() {
 
-            BufferedImage img = LoadSave.GetPlayerAtlas(LoadSave.PLAYER_ATLAS);
+            BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
         
             animations =  new BufferedImage[9][6];
             for (int j = 0; j < animations.length; j++)
