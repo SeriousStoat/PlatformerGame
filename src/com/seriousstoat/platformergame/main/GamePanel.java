@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import com.seriousstoat.platformergame.inputs.KeyboardInputs;
 import com.seriousstoat.platformergame.inputs.MouseInputs;
 
+import static com.seriousstoat.platformergame.main.Game.GAME_WIDTH;
+import static com.seriousstoat.platformergame.main.Game.GAME_HEIGHT;
+
 public class GamePanel extends JPanel {
 
     private MouseInputs mouseInputs;
@@ -27,8 +30,9 @@ public class GamePanel extends JPanel {
     }
 
     private void setPanelSize() {
-        Dimension size = new Dimension(1280,600);
+        Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
         setPreferredSize(size);
+        System.out.println("size: " + GAME_WIDTH + " : " + GAME_HEIGHT);
     }
 
     public void updateGame() {
