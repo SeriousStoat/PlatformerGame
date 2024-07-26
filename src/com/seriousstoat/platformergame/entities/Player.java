@@ -1,9 +1,6 @@
 package com.seriousstoat.platformergame.entities;
 
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.DOWN;
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.LEFT;
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.RIGHT;
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.UP;
+import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.ATTACK_1;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.IDLE;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.RUNNING;
@@ -20,8 +17,9 @@ public class Player extends Entity {
     private BufferedImage[][] animations;
     private int aniTick, aniIndex, aniSpeed = 15;
     private int playerAction = IDLE;
-    private int playerDir = -1;
-    private boolean moving = false;
+    private boolean moving = false, attacking = false;
+    private boolean up, left, down, right;
+    private float playerSpeed = 2.0f;
 
     public Player(float x, float y) {
         super(x, y);
@@ -30,9 +28,10 @@ public class Player extends Entity {
     
     public void update() {
 
+        updatePos();
         updateAnimationTick();
         setAnimation();
-        updatePos();
+        
     }
 
     public void render(Graphics g) {
@@ -41,52 +40,61 @@ public class Player extends Entity {
 
     }
 
-    public void setDirection(int direction) {
-        this.playerDir = direction;
-        moving = true;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
     private void updateAnimationTick() {
 
         aniTick++;
         if (aniTick >= aniSpeed) {
             aniTick = 0;
             aniIndex++;
-            if (aniIndex >= GetSpriteAmount(playerAction))
-                aniIndex = 0;           
+            if (aniIndex >= GetSpriteAmount(playerAction)) {
+                aniIndex = 0;
+                attacking = false;
+            }
+                         
 
         }
         
     }
 
     private void setAnimation() {
+        int startAni = playerAction;
+
         if (moving)
             playerAction = RUNNING;
         else
             playerAction = IDLE;
+
+        if (attacking)
+            playerAction = ATTACK_1;
+
+        if (startAni != playerAction)
+            resetAniTick();
     }
 
-    private void updatePos() {
+    private void resetAniTick() {
+		aniTick = 0;
+        aniIndex = 0;
+	}
 
-        if (moving)
-            switch(playerDir) {
-                case UP:
-                    y -= 5;
-                    break;
-                case LEFT:
-                    x -= 5;
-                    break;
-                case DOWN:
-                    y += 5;
-                    break;
-                case RIGHT:
-                    x += 5;
-                    break;
-            }
+	private void updatePos() {
+
+        moving = false;
+
+        if (left && !right) {
+            x -= playerSpeed;
+            moving = true;
+        } else if (right && !left) {
+            x += playerSpeed;
+            moving = true;
+        }
+
+        if (up && !down) {
+            y -= playerSpeed;
+            moving = true;
+        } else if (down && !up) {
+            y += playerSpeed;
+            moving = true;
+        }
 
     }
 
@@ -112,5 +120,53 @@ public class Player extends Entity {
         }
         
     }
+
+    public void resetDirBooleans() {
+        up = false;
+		left = false;
+        down = false;
+        right = false;
+
+	}
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+	
+
+    
 
 }
