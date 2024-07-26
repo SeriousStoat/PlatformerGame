@@ -2,6 +2,7 @@ package com.seriousstoat.platformergame.levels;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.security.PublicKey;
 
 import com.seriousstoat.platformergame.entities.LoadSave;
 import com.seriousstoat.platformergame.main.Game;
@@ -42,6 +43,10 @@ public class LevelManager {
 
     public void update() {
 
+    }
+
+    public Level getCurrentLevel() {
+        return levelOne;
     }
 
 }
