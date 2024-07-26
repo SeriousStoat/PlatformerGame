@@ -72,6 +72,13 @@ public class Player extends Entity {
         else
             playerAction = IDLE;
 
+        if (inAir) {
+            if (airSpeed < 0)
+                playerAction = JUMP;
+            else
+                playerAction = FALLING;
+        }
+
         if (attacking)
             playerAction = ATTACK_1;
 
@@ -98,6 +105,10 @@ public class Player extends Entity {
             xSpeed -= playerSpeed;
         if (right)
             xSpeed += playerSpeed;
+
+        if (!inAir)
+            if (!IsEntityOnFloor(hitbox, lvlData))
+                inAir = true;
 
         if (inAir) {
 
