@@ -1,10 +1,7 @@
 package com.seriousstoat.platformergame.entities;
 
-import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.ATTACK_1;
-import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.GetSpriteAmount;
-import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.IDLE;
-import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.RUNNING;
-import static com.seriousstoat.platformergame.utilz.HelpMethods.CanMoveHere;
+import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.*;
+import static com.seriousstoat.platformergame.utilz.HelpMethods.*;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -89,34 +86,43 @@ public class Player extends Entity {
 
 	private void updatePos() {
         moving = false;
-        if (!left && !right && !up && !down)
+        if (!left && !right && !inAir)
             return;
 
         float xSpeed = 0, ySpeed = 0;
 
-        if (left && !right)
-            xSpeed = -playerSpeed;
-        else if (right && !left)
-            xSpeed = playerSpeed;
+        if (left)
+            xSpeed -= playerSpeed;
+        if (right)
+            xSpeed += playerSpeed;
 
-        if (up && !down)
-            ySpeed = -playerSpeed;
-        else if (down && !up) 
-            ySpeed = playerSpeed;
+        if (inAir) {
 
-        // if (CanMoveHere(x+xSpeed, y+ySpeed, width, height, lvlData)) {
-        //     this.x += xSpeed;
-        //     this.y += ySpeed;
-        //     moving = true; 
-        // }
+        } else {
+            updateXPos(xSpeed);
+        }
 
-        if (CanMoveHere(hitbox.x+xSpeed, hitbox.y+ySpeed, hitbox.width, hitbox.height, lvlData)) {
-            hitbox.x += xSpeed;
-            hitbox.y += ySpeed;
-            moving = true; 
+
+
+
+
+    //     if (CanMoveHere(hitbox.x+xSpeed, hitbox.y+ySpeed, hitbox.width, hitbox.height, lvlData)) {
+    //         hitbox.x += xSpeed;
+    //         hitbox.y += ySpeed;
+    //         moving = true; 
+    // }
+
+
     }
 
+    private void updateXPos(float xSpeed) {
 
+        if (CanMoveHere(hitbox.x+xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)) {
+            hitbox.x += xSpeed;
+    } else {
+        hitbox.x = GetEntityXPosNextToWall(hitbox, xSpeed);
+    }
+        
     }
 
     private void loadAnimations() {

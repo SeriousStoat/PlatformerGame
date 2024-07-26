@@ -1,5 +1,7 @@
 package com.seriousstoat.platformergame.utilz;
 
+import java.awt.geom.Rectangle2D;
+
 import com.seriousstoat.platformergame.main.Game;
 
 public class HelpMethods {
@@ -29,6 +31,20 @@ public class HelpMethods {
         if (value >= 48 || value < 0 || value != 11)
             return true;
         return false;
+    }
+
+    public static float GetEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed) {
+        int currentTile = (int) (hitbox.x / Game.TILES_SIZE);
+        if ( xSpeed > 0 ) {
+            // Right
+            int tileXPos = currentTile * Game.TILES_SIZE;
+            int xOffset =  (int) (Game.TILES_SIZE - hitbox.width);
+            return tileXPos + xOffset -1;
+        } else {
+            // Left
+            return currentTile * Game.TILES_SIZE;
+            
+        }
     }
 
 }
