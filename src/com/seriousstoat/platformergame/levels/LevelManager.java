@@ -3,8 +3,8 @@ package com.seriousstoat.platformergame.levels;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import com.seriousstoat.platformergame.entities.LoadSave;
 import com.seriousstoat.platformergame.main.Game;
+import com.seriousstoat.platformergame.utilz.LoadSave;
 
 public class LevelManager {
 
@@ -42,6 +42,10 @@ public class LevelManager {
 
     public void update() {
 
+    }
+
+    public Level getCurrentLevel() {
+        return levelOne;
     }
 
 }
