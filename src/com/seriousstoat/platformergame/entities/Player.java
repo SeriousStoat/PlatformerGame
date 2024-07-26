@@ -1,5 +1,6 @@
 package com.seriousstoat.platformergame.entities;
 
+import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.ATTACK_1;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.IDLE;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.RUNNING;
@@ -16,7 +17,7 @@ public class Player extends Entity {
     private BufferedImage[][] animations;
     private int aniTick, aniIndex, aniSpeed = 15;
     private int playerAction = IDLE;
-    private boolean moving = false;
+    private boolean moving = false, attacking = false;
     private boolean up, left, down, right;
     private float playerSpeed = 2.0f;
 
@@ -45,21 +46,37 @@ public class Player extends Entity {
         if (aniTick >= aniSpeed) {
             aniTick = 0;
             aniIndex++;
-            if (aniIndex >= GetSpriteAmount(playerAction))
-                aniIndex = 0;           
+            if (aniIndex >= GetSpriteAmount(playerAction)) {
+                aniIndex = 0;
+                attacking = false;
+            }
+                         
 
         }
         
     }
 
     private void setAnimation() {
+        int startAni = playerAction;
+
         if (moving)
             playerAction = RUNNING;
         else
             playerAction = IDLE;
+
+        if (attacking)
+            playerAction = ATTACK_1;
+
+        if (startAni != playerAction)
+            resetAniTick();
     }
 
-    private void updatePos() {
+    private void resetAniTick() {
+		aniTick = 0;
+        aniIndex = 0;
+	}
+
+	private void updatePos() {
 
         moving = false;
 
@@ -111,6 +128,10 @@ public class Player extends Entity {
         right = false;
 
 	}
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+    }
 
     public boolean isUp() {
         return up;
