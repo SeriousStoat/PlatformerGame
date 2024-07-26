@@ -1,6 +1,5 @@
 package com.seriousstoat.platformergame.entities;
 
-import static com.seriousstoat.platformergame.main.Game.SCALE;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.ATTACK_1;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.IDLE;
@@ -8,6 +7,8 @@ import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.RU
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import com.seriousstoat.platformergame.utilz.LoadSave;
 
 public class Player extends Entity {
 

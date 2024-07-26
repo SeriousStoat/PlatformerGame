@@ -1,4 +1,4 @@
-package com.seriousstoat.platformergame.entities;
+package com.seriousstoat.platformergame.utilz;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
