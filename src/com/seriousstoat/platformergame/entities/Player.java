@@ -1,5 +1,6 @@
 package com.seriousstoat.platformergame.entities;
 
+import static com.seriousstoat.platformergame.main.Game.SCALE;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.ATTACK_1;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static com.seriousstoat.platformergame.utilz.Constants.PlayerConstants.IDLE;
@@ -32,7 +33,7 @@ public class Player extends Entity {
 
     public void render(Graphics g) {
 
-        g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 256, 160, null);
+        g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, (int) (64*SCALE), (int) (40*SCALE), null);
 
     }
 
