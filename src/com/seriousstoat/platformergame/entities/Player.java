@@ -86,6 +86,9 @@ public class Player extends Entity {
 
 	private void updatePos() {
         moving = false;
+
+        if (jump)
+            jump();
         if (!left && !right && !inAir)
             return;
 
@@ -98,24 +101,38 @@ public class Player extends Entity {
 
         if (inAir) {
 
-        } else {
+            if (CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, lvlData)) {
+                hitbox.y += airSpeed;
+                airSpeed += gravity;
+                updateXPos(xSpeed);
+            } else {
+                hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
+                if (airSpeed > 0)
+                    resetInAir();
+                else
+                    airSpeed = fallSpeedAfterCollision;
+                updateXPos(xSpeed);
+            }
+
+        } else
             updateXPos(xSpeed);
-        }
 
-
-
-
-
-    //     if (CanMoveHere(hitbox.x+xSpeed, hitbox.y+ySpeed, hitbox.width, hitbox.height, lvlData)) {
-    //         hitbox.x += xSpeed;
-    //         hitbox.y += ySpeed;
-    //         moving = true; 
-    // }
-
-
+        moving = true;
     }
 
-    private void updateXPos(float xSpeed) {
+    private void jump() {
+		if (inAir)
+            return;
+        inAir = true;
+        airSpeed = jumpSpeed;
+	}
+
+	private void resetInAir() {
+		inAir = false;
+        airSpeed = 0;
+	}
+
+	private void updateXPos(float xSpeed) {
 
         if (CanMoveHere(hitbox.x+xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)) {
             hitbox.x += xSpeed;
