@@ -35,11 +35,9 @@ public class Player extends Entity {
     }
     
     public void update() {
-
         updatePos();
         updateAnimationTick();
         setAnimation();
-        
     }
 
     public void render(Graphics g) {
@@ -99,7 +97,7 @@ public class Player extends Entity {
         if (!left && !right && !inAir)
             return;
 
-        float xSpeed = 0, ySpeed = 0;
+        float xSpeed = 0;
 
         if (left)
             xSpeed -= playerSpeed;
@@ -145,8 +143,8 @@ public class Player extends Entity {
 
 	private void updateXPos(float xSpeed) {
 
-        if (CanMoveHere(hitbox.x+xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)) {
-            hitbox.x += xSpeed;
+    if (CanMoveHere(hitbox.x+xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)) {
+        hitbox.x += xSpeed;
     } else {
         hitbox.x = GetEntityXPosNextToWall(hitbox, xSpeed);
     }
