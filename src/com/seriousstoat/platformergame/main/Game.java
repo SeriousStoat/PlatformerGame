@@ -3,6 +3,7 @@ package com.seriousstoat.platformergame.main;
 import java.awt.Graphics;
 
 import com.seriousstoat.platformergame.entities.Player;
+import com.seriousstoat.platformergame.gamestates.Gamestate;
 import com.seriousstoat.platformergame.levels.LevelManager;
 
 public class Game implements Runnable {
@@ -46,14 +47,31 @@ public class Game implements Runnable {
     }
 
     public void update() {
-        player.update();
-        levelManager.update();
+        switch(Gamestate.state) {
+		case MENU:
+                
+            break;
+        case PLAYING:
+            levelManager.update();
+            player.update();
+            break;
+        default:
+            break;   
+        }
     }
 
     public void render(Graphics g) {
-        levelManager.draw(g);
-        player.render(g);
-        
+        switch(Gamestate.state) {
+        case MENU:
+            
+            break;
+        case PLAYING:
+            levelManager.draw(g);
+            player.render(g);
+            break;
+        default:
+            break;
+        }
     }
 
     @Override
