@@ -1,5 +1,7 @@
 package com.seriousstoat.platformergame.ui;
 
+import static com.seriousstoat.platformergame.utilz.Constants.UI.PauseButtons.*;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -12,14 +14,23 @@ public class PauseOverlay {
 
     private BufferedImage backgroundImg;
     private int bgX, bgY, bgW, bgH;
+    private SoundButton musicButton, sfxButton;
 
     public PauseOverlay() {
-
         loadBackground();
-
+        createSoundButtons();
     }
 
-    private void loadBackground() {
+    private void createSoundButtons() {
+        int soundX = (int) (450 * Game.SCALE);
+        int musicY = (int) (140 * Game.SCALE);
+        int sfxY =  (int) (186 * Game.SCALE);
+		musicButton = new SoundButton(soundX, musicY, SOUND_SIZE, SOUND_SIZE);
+        sfxButton = new SoundButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
+        
+	}
+
+	private void loadBackground() {
         backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PAUSE_MENU);
         bgW = (int) (backgroundImg.getWidth() * Game.SCALE);
         bgH = (int) (backgroundImg.getHeight() * Game.SCALE);
@@ -33,7 +44,11 @@ public class PauseOverlay {
     }
 
     public void draw(Graphics g) {
+        // Background
         g.drawImage(backgroundImg, bgX, bgY, bgW, bgH, null);
+        // Sound Buttons
+        musicButton.draw(g);
+        sfxButton.draw(g);
     }
 
     public void mouseDragged(MouseEvent e) {
