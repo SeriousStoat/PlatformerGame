@@ -1,6 +1,7 @@
 package com.seriousstoat.platformergame.ui;
 
 import static com.seriousstoat.platformergame.utilz.Constants.UI.PauseButtons.*;
+import static com.seriousstoat.platformergame.utilz.Constants.UI.URMButtons.URM_SIZE;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -14,13 +15,26 @@ public class PauseOverlay {
     private BufferedImage backgroundImg;
     private int bgX, bgY, bgW, bgH;
     private SoundButton musicButton, sfxButton;
+    private UrmButton menuB, replayB, unpauseB;
 
     public PauseOverlay() {
         loadBackground();
         createSoundButtons();
+        createUrmButtons();
     }
 
-    private void createSoundButtons() {
+    private void createUrmButtons() {
+		int menuX = (int) (313 * Game.SCALE);
+        int replayX = (int) (387 * Game.SCALE);
+        int unpauseX = (int) (462 * Game.SCALE);
+        int bY = (int) (325 * Game.SCALE);
+
+        menuB = new UrmButton(menuX, bY, URM_SIZE, URM_SIZE, 2);
+        replayB = new UrmButton(replayX, bY, URM_SIZE, URM_SIZE, 1);
+        unpauseB = new UrmButton(unpauseX, bY, URM_SIZE, URM_SIZE, 0);
+	}
+
+	private void createSoundButtons() {
         int soundX = (int) (450 * Game.SCALE);
         int musicY = (int) (140 * Game.SCALE);
         int sfxY =  (int) (186 * Game.SCALE);
@@ -41,6 +55,9 @@ public class PauseOverlay {
 	public void update() {
         musicButton.update();
         sfxButton.update();
+        menuB.update();
+        replayB.update();
+        unpauseB.update();
     }
 
     public void draw(Graphics g) {
@@ -49,6 +66,10 @@ public class PauseOverlay {
         // Sound Buttons
         musicButton.draw(g);
         sfxButton.draw(g);
+        // URM Buttons
+        menuB.draw(g);
+        replayB.draw(g);
+        unpauseB.draw(g);
     }
 
     public void mouseDragged(MouseEvent e) {
