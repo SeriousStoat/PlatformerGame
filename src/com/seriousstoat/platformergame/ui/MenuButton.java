@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import com.seriousstoat.platformergame.gamestates.Gamestate;
 import com.seriousstoat.platformergame.utilz.LoadSave;
 
-import static com.seriousstoat.platformergame.utilz.Constants.UI.Buttons.*;
+import static com.seriousstoat.platformergame.utilz.Constants.UI.MenuButtons.*;
 
 public class MenuButton {
 
