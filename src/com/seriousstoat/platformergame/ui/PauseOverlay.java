@@ -2,6 +2,7 @@ package com.seriousstoat.platformergame.ui;
 
 import static com.seriousstoat.platformergame.utilz.Constants.UI.PauseButtons.*;
 import static com.seriousstoat.platformergame.utilz.Constants.UI.URMButtons.URM_SIZE;
+import static com.seriousstoat.platformergame.utilz.Constants.UI.VolumeButton.*;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -19,15 +20,23 @@ public class PauseOverlay {
     private int bgX, bgY, bgW, bgH;
     private SoundButton musicButton, sfxButton;
     private UrmButton menuB, replayB, unpauseB;
+    private VolumeButton volumeButton;
 
     public PauseOverlay(Playing playing) {
         this.playing = playing;
         loadBackground();
         createSoundButtons();
         createUrmButtons();
+        createVolumeButton();
     }
 
-    private void createUrmButtons() {
+    private void createVolumeButton() {
+		int vX = (int) (309 * Game.SCALE);
+        int vY = (int) (278 * Game.SCALE);
+        volumeButton = new VolumeButton(vX, vY, SLIDER_WIDTH, VOLUME_HEIGHT);
+	}
+
+	private void createUrmButtons() {
 		int menuX = (int) (313 * Game.SCALE);
         int replayX = (int) (387 * Game.SCALE);
         int unpauseX = (int) (462 * Game.SCALE);
@@ -62,6 +71,7 @@ public class PauseOverlay {
         menuB.update();
         replayB.update();
         unpauseB.update();
+        volumeButton.update();
     }
 
     public void draw(Graphics g) {
@@ -74,6 +84,8 @@ public class PauseOverlay {
         menuB.draw(g);
         replayB.draw(g);
         unpauseB.draw(g);
+        // Volume Button
+        volumeButton.draw(g);
     }
 
     public void mouseDragged(MouseEvent e) {
@@ -103,8 +115,10 @@ public class PauseOverlay {
                 sfxButton.setMuted(!sfxButton.isMuted());
         }
         else if (isIn(e, menuB)) {
-            if (menuB.isMousePressed())
+            if (menuB.isMousePressed()) {
                 Gamestate.state = Gamestate.MENU;
+                playing.unpauseGame();
+            }      
         }
         else if (isIn(e, replayB)) {
             if (replayB.isMousePressed())
