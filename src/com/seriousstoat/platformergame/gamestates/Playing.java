@@ -9,6 +9,7 @@ import com.seriousstoat.platformergame.entities.Player;
 import com.seriousstoat.platformergame.levels.LevelManager;
 import com.seriousstoat.platformergame.main.Game;
 import com.seriousstoat.platformergame.ui.PauseOverlay;
+import com.seriousstoat.platformergame.utilz.LoadSave;
 
 public class Playing extends State implements Statemethods {
 
@@ -16,6 +17,13 @@ public class Playing extends State implements Statemethods {
     private LevelManager levelManager;
     private PauseOverlay pauseOverlay;
     private boolean paused = false;
+
+    private int xLvlOffset;
+    private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
+    private int rightBorder = (int) (0.8 * Game.GAME_WIDTH);
+    private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
+    private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
+    private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
 
     public Playing(Game game) {
 		super(game);
@@ -34,18 +42,32 @@ public class Playing extends State implements Statemethods {
         if (!paused) {
             levelManager.update();
             player.update();
+            checkCloseToBorder();
         } else {
             pauseOverlay.update();
-        }
-
-		
+        }	
         
+	}
+
+	private void checkCloseToBorder() {
+		int playerX = (int) player.getHitbox().x;
+        int diff = playerX - xLvlOffset;
+
+        if (diff > rightBorder)
+            xLvlOffset += diff - rightBorder;
+        else if (diff < leftBorder)
+            xLvlOffset += diff - leftBorder;
+
+        if (xLvlOffset > maxLvlOffsetX)
+            xLvlOffset = maxLvlOffsetX;
+        else if (xLvlOffset < 0)
+            xLvlOffset = 0;
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		levelManager.draw(g);
-        player.render(g);
+		levelManager.draw(g, xLvlOffset);
+        player.render(g, xLvlOffset);
 
         if (paused) {
             g.setColor(new Color(0,0,0,150));

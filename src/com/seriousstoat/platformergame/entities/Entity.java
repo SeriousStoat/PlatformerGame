@@ -34,7 +34,7 @@ public abstract class Entity {
     //     hitbox.y = (int) y;
     // }
 
-    public Rectangle2D.Float getHtibox() {
+    public Rectangle2D.Float getHitbox() {
         return hitbox;
     }
 
