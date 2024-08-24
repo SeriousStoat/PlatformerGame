@@ -5,12 +5,14 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import com.seriousstoat.platformergame.entities.Player;
 import com.seriousstoat.platformergame.levels.LevelManager;
 import com.seriousstoat.platformergame.main.Game;
 import com.seriousstoat.platformergame.ui.PauseOverlay;
 import com.seriousstoat.platformergame.utilz.LoadSave;
+import static com.seriousstoat.platformergame.utilz.Constants.Environment.*;
 
 public class Playing extends State implements Statemethods {
 
@@ -26,13 +28,20 @@ public class Playing extends State implements Statemethods {
     private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
     private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
 
-    private BufferedImage backgroundImg;
+    private BufferedImage backgroundImg, bigCloud, smallCloud;
+    private int[] smallCloudsPos;
+    private Random rnd = new Random();
 
     public Playing(Game game) {
 		super(game);
         initClasses();
 
         backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BG_IMG);
+        bigCloud = LoadSave.GetSpriteAtlas(LoadSave.BIG_CLOUDS);
+        smallCloud = LoadSave.GetSpriteAtlas(LoadSave.SMALL_CLOUDS);
+        smallCloudsPos = new int[8];
+        for (int i = 0; i < smallCloudsPos.length; i++)
+            smallCloudsPos[i] = (int) (70 * Game.SCALE) + rnd.nextInt((int) (150 * Game.SCALE));
 	}
 
     private void initClasses() {
@@ -73,6 +82,9 @@ public class Playing extends State implements Statemethods {
 	public void draw(Graphics g) {
 
         g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+
+        drawClouds(g);
+
 		levelManager.draw(g, xLvlOffset);
         player.render(g, xLvlOffset);
 
@@ -84,7 +96,15 @@ public class Playing extends State implements Statemethods {
             
 	}
 
-	@Override
+	private void drawClouds(Graphics g) {
+        for (int i = 0; i < 3; i++)
+            g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH, (int) (204 * Game.SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
+
+        for (int i = 0; i < smallCloudsPos.length; i++)
+            g.drawImage(smallCloud, i * 4 * SMALL_CLOUD_WIDTH, smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
+    }
+
+    @Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1)
             player.setAttacking(true);
