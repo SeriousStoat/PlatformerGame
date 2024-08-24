@@ -56,8 +56,7 @@ public class Menu extends State implements Statemethods {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+
 	}
 
 	@Override
@@ -109,8 +108,7 @@ public class Menu extends State implements Statemethods {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
+		
 	}
 
 }
