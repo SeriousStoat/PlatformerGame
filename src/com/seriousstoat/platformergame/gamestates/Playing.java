@@ -41,7 +41,7 @@ public class Playing extends State implements Statemethods {
         smallCloud = LoadSave.GetSpriteAtlas(LoadSave.SMALL_CLOUDS);
         smallCloudsPos = new int[8];
         for (int i = 0; i < smallCloudsPos.length; i++)
-            smallCloudsPos[i] = (int) (80 * Game.SCALE) + rnd.nextInt((int) (100 * Game.SCALE));
+            smallCloudsPos[i] = (int) (80 * Game.SCALE) + rnd.nextInt((int) (90 * Game.SCALE));
 	}
 
     private void initClasses() {
