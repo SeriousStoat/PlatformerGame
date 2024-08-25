@@ -25,10 +25,9 @@ public class EnemyManager {
         System.out.println("There are " + crabbies.size() + " crabs");
     }
 
-    public void update () {
+    public void update (int[][] lvlData) {
         for (Crabby c : crabbies)
-            c.update();
-
+            c.update(lvlData);
     }
 
     public void draw(Graphics g, int xLvlOffset) {
@@ -36,9 +35,10 @@ public class EnemyManager {
     }
 
     private void drawCrabs(Graphics g, int xLvlOffset) {
-        for (Crabby c : crabbies)
-            g.drawImage(crabbyArray[c.getEnemyState()][c.getAniIndex()], (int)c.getHitbox().x - xLvlOffset, (int)c.getHitbox().y, CRABBY_WIDTH, CRABBY_HEIGHT, null);
-        
+        for (Crabby c : crabbies) {
+            g.drawImage(crabbyArray[c.getEnemyState()][c.getAniIndex()], (int)c.getHitbox().x - xLvlOffset - CRABBY_DRAWOFFSET_X, (int)c.getHitbox().y - CRABBY_DRAWOFFSET_Y, CRABBY_WIDTH, CRABBY_HEIGHT, null);
+            c.drawHitbox(g, xLvlOffset);
+        }
     }
 
     private void loadEnemyImgs() {
@@ -47,7 +47,6 @@ public class EnemyManager {
         for (int j = 0; j < crabbyArray.length; j++)
             for (int i = 0; i < crabbyArray[j].length; i++)
                 crabbyArray[j][i] = temp.getSubimage(i * CRABBY_WIDTH_DEFAULT, j * CRABBY_HEIGHT_DEFAULT, CRABBY_WIDTH_DEFAULT, CRABBY_HEIGHT_DEFAULT);
-        
     }
 
 }
