@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.seriousstoat.platformergame.entities.EnemyManager;
 import com.seriousstoat.platformergame.entities.Player;
 import com.seriousstoat.platformergame.levels.LevelManager;
 import com.seriousstoat.platformergame.main.Game;
@@ -18,6 +19,7 @@ public class Playing extends State implements Statemethods {
 
     private Player player;
     private LevelManager levelManager;
+    private EnemyManager enemyManager;
     private PauseOverlay pauseOverlay;
     private boolean paused = false;
 
@@ -41,11 +43,12 @@ public class Playing extends State implements Statemethods {
         smallCloud = LoadSave.GetSpriteAtlas(LoadSave.SMALL_CLOUDS);
         smallCloudsPos = new int[8];
         for (int i = 0; i < smallCloudsPos.length; i++)
-            smallCloudsPos[i] = (int) (80 * Game.SCALE) + rnd.nextInt((int) (100 * Game.SCALE));
+            smallCloudsPos[i] = (int) (80 * Game.SCALE) + rnd.nextInt((int) (90 * Game.SCALE));
 	}
 
     private void initClasses() {
         levelManager = new LevelManager(game);
+        enemyManager = new EnemyManager(this);
         player = new Player(200, 200,(int) (64 * Game.SCALE),(int) (40 * Game.SCALE));
         player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
@@ -56,6 +59,7 @@ public class Playing extends State implements Statemethods {
         if (!paused) {
             levelManager.update();
             player.update();
+            enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
             checkCloseToBorder();
         } else {
             pauseOverlay.update();
@@ -86,6 +90,7 @@ public class Playing extends State implements Statemethods {
         drawClouds(g);
 
 		levelManager.draw(g, xLvlOffset);
+        enemyManager.draw(g, xLvlOffset);
         player.render(g, xLvlOffset);
 
         if (paused) {
