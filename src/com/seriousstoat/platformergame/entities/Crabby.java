@@ -1,8 +1,6 @@
 package com.seriousstoat.platformergame.entities;
 
 import static com.seriousstoat.platformergame.utilz.Constants.Enemy.*;
-import static com.seriousstoat.platformergame.utilz.HelpMethods.*;
-import static com.seriousstoat.platformergame.utilz.Constants.Directions.*;
 
 import com.seriousstoat.platformergame.main.Game;
 
