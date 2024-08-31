@@ -1,6 +1,7 @@
 package com.seriousstoat.platformergame.entities;
 
 import static com.seriousstoat.platformergame.utilz.Constants.Enemy.*;
+import static com.seriousstoat.platformergame.utilz.Constants.Directions.*;
 
 import com.seriousstoat.platformergame.main.Game;
 
@@ -39,5 +40,21 @@ public class Crabby extends Enemy {
                     break;
             }
         }
+    
     }
+    
+    public int flipX() {
+        if (walkDir == RIGHT)
+            return width;
+        else
+            return 0;
+    }
+    
+    public int flipW() {
+        if (walkDir == RIGHT)
+            return -1;
+        else
+            return 1;
+    }
+   
 }
