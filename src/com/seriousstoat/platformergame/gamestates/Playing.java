@@ -109,6 +109,10 @@ public class Playing extends State implements Statemethods {
             g.drawImage(smallCloud, i * 4 * SMALL_CLOUD_WIDTH - (int) (xLvlOffset * 0.7), smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
     }
 
+    public void resetAll() {
+        //TODO: reset playing, enemy, lvl etc...
+    }
+
     @Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1)
