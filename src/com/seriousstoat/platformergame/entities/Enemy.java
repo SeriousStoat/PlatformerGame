@@ -4,6 +4,7 @@ import static com.seriousstoat.platformergame.utilz.Constants.Enemy.*;
 import static com.seriousstoat.platformergame.utilz.Constants.Directions.*;
 import static com.seriousstoat.platformergame.utilz.HelpMethods.*;
 
+import java.awt.geom.Rectangle2D;
 
 import com.seriousstoat.platformergame.main.Game;
 
@@ -18,11 +19,17 @@ public abstract class Enemy extends Entity {
     protected int walkDir = LEFT;
     protected int tileY;
     protected float attackDistance = Game.TILES_SIZE;
+    protected int maxHealth;
+    protected int currentHealth;
+    protected boolean active = true;
+    protected boolean attackChecked;
     
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
         this.enemyType = enemyType;
         initHitbox(x, y, width, height);
+        maxHealth =  GetMaxHealth(enemyType);
+        currentHealth = maxHealth;
 
     }
 
@@ -93,6 +100,20 @@ public abstract class Enemy extends Entity {
         aniIndex = 0;
     }
 
+    public void hurt(int amount) {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+            newState(DEAD);
+        else
+            newState(HIT);
+    }
+
+    protected void checkPlayerHit(Rectangle2D.Float attackBox, Player player) {
+        if (attackBox.intersects(player.hitbox))
+            player.changeHealth(-GetEnemyDmg(enemyType));
+        attackChecked = true;
+    }
+
     protected void updateAnimationTick() {
         aniTick++;
         if (aniTick >= aniSpeed) {
@@ -100,8 +121,11 @@ public abstract class Enemy extends Entity {
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(enemyType, enemyState)) {
                 aniIndex = 0;
-                if (enemyState == ATTACK)
-                    enemyState = IDLE;
+
+                switch(enemyState) {
+                    case ATTACK, HIT -> enemyState = IDLE;
+                    case DEAD -> active = false;
+                }
             }
         }
     }
@@ -112,6 +136,16 @@ public abstract class Enemy extends Entity {
         else
             walkDir = LEFT;
     }
+    
+    public void resetEnemy() {
+        hitbox.x = x;
+        hitbox.y = y;
+        firstUpdate = true;
+        currentHealth = maxHealth;
+        newState(IDLE);
+        active = true;
+        fallSpeed = 0;
+    }
 
     public int getAniIndex() {
         return aniIndex;
@@ -119,5 +153,9 @@ public abstract class Enemy extends Entity {
 
     public int getEnemyState() {
         return enemyState;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }
