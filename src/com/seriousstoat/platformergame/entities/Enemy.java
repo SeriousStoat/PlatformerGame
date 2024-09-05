@@ -136,6 +136,16 @@ public abstract class Enemy extends Entity {
         else
             walkDir = LEFT;
     }
+    
+    public void resetEnemy() {
+        hitbox.x = x;
+        hitbox.y = y;
+        firstUpdate = true;
+        currentHealth = maxHealth;
+        newState(IDLE);
+        active = true;
+        fallSpeed = 0;
+    }
 
     public int getAniIndex() {
         return aniIndex;
