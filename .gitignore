@@ -25,3 +25,6 @@ replay_pid*
 
 # VSCode Folder #
 .vscode/
+
+# Bin Folder
+bin/
