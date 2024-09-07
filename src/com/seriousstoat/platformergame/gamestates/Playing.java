@@ -13,6 +13,7 @@ import com.seriousstoat.platformergame.entities.Player;
 import com.seriousstoat.platformergame.levels.LevelManager;
 import com.seriousstoat.platformergame.main.Game;
 import com.seriousstoat.platformergame.ui.GameOverOverlay;
+import com.seriousstoat.platformergame.ui.LevelCompletedOverlay;
 import com.seriousstoat.platformergame.ui.PauseOverlay;
 import com.seriousstoat.platformergame.utilz.LoadSave;
 import static com.seriousstoat.platformergame.utilz.Constants.Environment.*;
@@ -24,6 +25,7 @@ public class Playing extends State implements Statemethods {
     private EnemyManager enemyManager;
     private PauseOverlay pauseOverlay;
     private GameOverOverlay gameOverOverlay;
+    private LevelCompletedOverlay levelCompletedOverlay;
     private boolean paused = false;
 
     private int xLvlOffset;
@@ -58,6 +60,7 @@ public class Playing extends State implements Statemethods {
         player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
+        levelCompletedOverlay = new LevelCompletedOverlay(this);
     }
 
 	@Override
@@ -105,6 +108,8 @@ public class Playing extends State implements Statemethods {
             pauseOverlay.draw(g);
         } else if (gameOver)
             gameOverOverlay.draw(g);
+
+        levelCompletedOverlay.draw(g);
             
 	}
 
