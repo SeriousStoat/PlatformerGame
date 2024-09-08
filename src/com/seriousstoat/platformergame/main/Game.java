@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import com.seriousstoat.platformergame.gamestates.Gamestate;
 import com.seriousstoat.platformergame.gamestates.Playing;
+import com.seriousstoat.platformergame.utilz.LoadSave;
 import com.seriousstoat.platformergame.gamestates.Menu;
 
 public class Game implements Runnable {
@@ -26,6 +27,7 @@ public class Game implements Runnable {
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 
     public Game() {
+        LoadSave.GetAllLevels();
         initClasses();
         
         gamePanel = new GamePanel(this);
