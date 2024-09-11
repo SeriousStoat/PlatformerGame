@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import com.seriousstoat.platformergame.gamestates.Gamestate;
 import com.seriousstoat.platformergame.gamestates.Playing;
 import com.seriousstoat.platformergame.main.Game;
 import com.seriousstoat.platformergame.utilz.LoadSave;
@@ -71,11 +72,14 @@ public class LevelCompletedOverlay {
 
     public void mouseReleased(MouseEvent e) {
         if (isIn(menu, e)) {
-            if (menu.isMousePressed())
-                System.out.println("menu!");
+            if (menu.isMousePressed()) {
+                playing.resetAll();
+                Gamestate.state = Gamestate.MENU;
+            }
         } else if (isIn(next, e))
-            if (next.isMousePressed())
-                System.out.println("next!");
+            if (next.isMousePressed()) {
+                playing.loadNextLevel();
+            }
 
         menu.resetBools();
         next.resetBools();

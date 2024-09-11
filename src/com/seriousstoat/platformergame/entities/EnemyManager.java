@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.seriousstoat.platformergame.gamestates.Playing;
+import com.seriousstoat.platformergame.levels.Level;
 import com.seriousstoat.platformergame.utilz.LoadSave;
 import static com.seriousstoat.platformergame.utilz.Constants.Enemy.*;
 
@@ -18,17 +19,22 @@ public class EnemyManager {
     public EnemyManager(Playing playing) {
         this.playing = playing;
         loadEnemyImgs();
-        addEnemies();
     }
 
-    private void addEnemies() {
-        crabbies = LoadSave.GetCrabs();
+    public void loadEnemies(Level level) {
+        crabbies = level.getCrabs();
         System.out.println("There are " + crabbies.size() + " crabs");
     }
 
     public void update (int[][] lvlData, Player player) {
+        boolean isAnyActive = false;
         for (Crabby c : crabbies)
-            c.update(lvlData, player);
+            if (c.isActive()) {
+                c.update(lvlData, player);
+                isAnyActive = true;
+            }
+        if (!isAnyActive)
+            playing.setLevelCompleted(true);
     }
 
     public void draw(Graphics g, int xLvlOffset) {
